@@ -1,0 +1,72 @@
+[
+  {
+    "model": "dictionaries.transactiontype",
+    "pk": 1,
+    "fields": { "name": "Пополнение" }
+  },
+  {
+    "model": "dictionaries.transactiontype",
+    "pk": 2,
+    "fields": { "name": "Списание" }
+  },
+  {
+    "model": "dictionaries.category",
+    "pk": 1,
+    "fields": { "name": "Инфраструктура", "transaction_type": 2 }
+  },
+  {
+    "model": "dictionaries.category",
+    "pk": 2,
+    "fields": { "name": "Маркетинг", "transaction_type": 2 }
+  },
+  {
+    "model": "dictionaries.category",
+    "pk": 3,
+    "fields": { "name": "Выручка", "transaction_type": 1 }
+  },
+  {
+    "model": "dictionaries.subcategory",
+    "pk": 1,
+    "fields": { "name": "VPS", "category": 1 }
+  },
+  {
+    "model": "dictionaries.subcategory",
+    "pk": 2,
+    "fields": { "name": "Proxy", "category": 1 }
+  },
+  {
+    "model": "dictionaries.subcategory",
+    "pk": 3,
+    "fields": { "name": "Avito", "category": 2 }
+  },
+  {
+    "model": "dictionaries.subcategory",
+    "pk": 4,
+    "fields": { "name": "Farpost", "category": 2 }
+  },
+  {
+    "model": "dictionaries.subcategory",
+    "pk": 5,
+    "fields": { "name": "Услуги", "category": 3 }
+  },
+  {
+    "model": "dictionaries.subcategory",
+    "pk": 6,
+    "fields": { "name": "Товары", "category": 3 }
+  },
+  {
+    "model": "dictionaries.status",
+    "pk": 1,
+    "fields": { "name": "Бизнес" }
+  },
+  {
+    "model": "dictionaries.status",
+    "pk": 2,
+    "fields": { "name": "Личное" }
+  },
+  {
+    "model": "dictionaries.status",
+    "pk": 3,
+    "fields": { "name": "Налог" }
+  }
+]

@@ -1,0 +1,24 @@
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+}
+
+.table th {
+    font-weight: 600;
+    color: #495057;
+    background-color: #f8f9fa;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}

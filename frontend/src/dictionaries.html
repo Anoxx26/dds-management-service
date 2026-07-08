@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление справочниками</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5 shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">Система ДДС</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="index.html">Мониторинг ДДС</a>
+                <a class="nav-link active" href="dictionaries.html">Управление справочниками</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container pb-5">
+        <header class="mb-4">
+            <h1 class="fs-3 fw-bold text-secondary">Конструктор справочников и связей</h1>
+            <p class="text-muted">Добавление, редактирование и удаление справочных данных системы.</p>
+        </header>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card p-4 shadow-sm h-100">
+                    <h5 class="fw-bold mb-3 text-primary">Статусы</h5>
+                    <form id="status-form" class="row g-2 mb-3">
+                        <input type="hidden" id="status-id">
+                        <div class="col-8">
+                            <input type="text" id="status-name" class="form-control" placeholder="Название статуса..." required>
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" id="status-submit" class="btn btn-primary w-100">Добавить</button>
+                        </div>
+                    </form>
+                    <div class="table-responsive" style="max-height: 250px;">
+                        <table class="table table-sm table-hover align-middle">
+                            <thead>
+                                <tr><th>ID</th><th>Название</th><th class="text-end">Действия</th></tr>
+                            </thead>
+                            <tbody id="statuses-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card p-4 shadow-sm h-100">
+                    <h5 class="fw-bold mb-3 text-success">Типы операций</h5>
+                    <form id="type-form" class="row g-2 mb-3">
+                        <input type="hidden" id="type-id">
+                        <div class="col-8">
+                            <input type="text" id="type-name" class="form-control" placeholder="Название типа..." required>
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" id="type-submit" class="btn btn-success w-100">Добавить</button>
+                        </div>
+                    </form>
+                    <div class="table-responsive" style="max-height: 250px;">
+                        <table class="table table-sm table-hover align-middle">
+                            <thead>
+                                <tr><th>ID</th><th>Название</th><th class="text-end">Действия</th></tr>
+                            </thead>
+                            <tbody id="types-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card p-4 shadow-sm h-100">
+                    <h5 class="fw-bold mb-3 text-warning">Категории</h5>
+                    <form id="category-crud-form" class="mb-3">
+                        <input type="hidden" id="category-crud-id">
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <input type="text" id="category-crud-name" class="form-control" placeholder="Название категории..." required>
+                            </div>
+                            <div class="col-6">
+                                <select id="category-crud-type" class="form-select" required>
+                                    <option value="" selected disabled>Привязать к типу...</option>
+                                </select>
+                            </div>
+                            <div class="col-12 text-end mt-2">
+                                <button type="submit" id="category-crud-submit" class="btn btn-warning w-100 text-dark fw-bold">Добавить категорию</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="table-responsive" style="max-height: 250px;">
+                        <table class="table table-sm table-hover align-middle">
+                            <thead>
+                                <tr><th>ID</th><th>Категория</th><th>Тип операции</th><th class="text-end">Действия</th></tr>
+                            </thead>
+                            <tbody id="categories-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card p-4 shadow-sm h-100">
+                    <h5 class="fw-bold mb-3 text-info">Подкатегории</h5>
+                    <form id="subcategory-crud-form" class="mb-3">
+                        <input type="hidden" id="subcategory-crud-id">
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <input type="text" id="subcategory-crud-name" class="form-control" placeholder="Название подкатегории..." required>
+                            </div>
+                            <div class="col-6">
+                                <select id="subcategory-crud-category" class="form-select" required>
+                                    <option value="" selected disabled>Привязать к категории...</option>
+                                </select>
+                            </div>
+                            <div class="col-12 text-end mt-2">
+                                <button type="submit" id="subcategory-crud-submit" class="btn btn-info w-100 text-dark fw-bold">Добавить подкатегорию</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="table-responsive" style="max-height: 250px;">
+                        <table class="table table-sm table-hover align-middle">
+                            <thead>
+                                <tr><th>ID</th><th>Подкатегория</th><th>Родительская категория</th><th class="text-end">Действия</th></tr>
+                            </thead>
+                            <tbody id="subcategories-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/dictionaries.js"></script>
+</body>
+</html>

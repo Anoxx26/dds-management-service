@@ -1,0 +1,55 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: dds_db
+    environment:
+      - POSTGRES_DB=dds_finance
+      - POSTGRES_USER=postgres_user
+      - POSTGRES_PASSWORD=my_secure_password_123
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: dds_backend
+    ports:
+      - "8001:8000"
+    volumes:
+      - ..:/app
+    environment:
+      - DEBUG=True
+      - SECRET_KEY=django-insecure-your-super-secret-key-here
+      - DB_NAME=dds_finance
+      - DB_USER=postgres_user
+      - DB_PASSWORD=my_secure_password_123
+      - DB_HOST=db
+      - DB_PORT=5432
+    # Скрипт сначала ждет запуска Postgres, а потом применяет миграции и стартует Django
+    command: >
+      bash -c "echo 'Waiting for postgres...' && 
+               sleep 3 && 
+               python manage.py makemigrations && 
+               python manage.py migrate && 
+               python manage.py loaddata apps/dictionaries/fixtures/initial_data.json &&
+               python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ..                  
+      dockerfile: frontend/Dockerfile
+    container_name: dds_frontend
+    ports:
+      - "8080:80"
+    volumes:
+      - ../frontend/src:/usr/share/nginx/html
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:
