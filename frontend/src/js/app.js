@@ -1,15 +1,11 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    // --- ЭЛЕМЕНТЫ ФОРМЫ ТРАНЗАКЦИИ ---
     const typeSelect = document.getElementById('input-transaction_type');
     const categorySelect = document.getElementById('input-category');
     const subcategorySelect = document.getElementById('input-subcategory');
     const statusSelect = document.getElementById('input-status');
     const transactionForm = document.getElementById('transaction-form');
     const tbody = document.getElementById('transactions-tbody');
-    // Ссылка на модальное окно
     const transactionModalEl = document.getElementById('transactionModal');
-
-    // --- ЭЛЕМЕНТЫ БЛОКА ФИЛЬТРАЦИИ ---
     const filterForm = document.getElementById('filter-form');
     const filterStatusSelect = document.getElementById('filter-status');
     const filterTypeSelect = document.getElementById('filter-type');
@@ -28,15 +24,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-        const [categories, statuses] = await Promise.all([
+        const [categories, statuses, transactionTypes] = await Promise.all([
             api.getCategories(),
-            api.getStatuses()
+            api.getStatuses(),
+            api.getTransactionTypes()
         ]);
 
         ui.fillSelect(statusSelect, statuses, 'Выберите статус...');
         if (filterStatusSelect) {
             ui.fillSelect(filterStatusSelect, statuses, 'Все статусы');
             filterStatusSelect.options[0].value = "";
+        }
+
+        if (filterTypeSelect) {
+            ui.fillSelect(filterTypeSelect, transactionTypes, 'Все типы');
+            filterTypeSelect.options[0].value = "";
+        }
+
+        if (typeSelect) {
+            ui.fillSelect(typeSelect, transactionTypes, 'Выберите тип...');
         }
 
         categorySelect.disabled = true;
@@ -50,7 +56,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Ошибка инициализации приложения:', err);
     }
 
-    // --- ДИНАМИЧЕСКИЕ СЕЛЕКТЫ ФОРМЫ ---
     typeSelect.addEventListener('change', async (e) => {
         const typeId = e.target.value;
         categorySelect.disabled = true;
@@ -81,7 +86,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // --- ОБРАБОТКА ОТПРАВКИ ФОРМЫ (Создание/Обновление) ---
     transactionForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const formData = new FormData(transactionForm);
@@ -109,7 +113,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             subcategorySelect.disabled = true;
             await loadTable();
 
-            // ЗАКРЫТИЕ МОДАЛЬНОГО ОКНА ПОСЛЕ УСПЕХА
             const modal = bootstrap.Modal.getInstance(transactionModalEl);
             if (modal) modal.hide();
 
@@ -121,20 +124,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     transactionModalEl.addEventListener('hidden.bs.modal', () => {
-        // 1. Сбрасываем форму через вашу функцию из ui.js
         ui.resetForm();
 
-        // 2. Возвращаем заголовок и кнопку в режим "Создания"
         document.getElementById('form-title').innerText = 'Новая транзакция';
         document.getElementById('submit-btn').innerText = 'Добавить';
-
-        // 3. Скрываем кнопку "Отмена"
         document.getElementById('cancel-btn').classList.add('d-none');
-
-        // 4. Очищаем скрытое поле ID
         document.getElementById('input-id').value = '';
-
-        // 5. Блокируем селекты
         document.getElementById('input-category').disabled = true;
         document.getElementById('input-subcategory').disabled = true;
     });
@@ -145,7 +140,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const formData = new FormData(filterForm);
         const params = new URLSearchParams();
 
-        // Собираем все заполненные фильтры
         for (let [key, value] of formData.entries()) {
             if (value) {
                 params.append(key, value);
@@ -159,7 +153,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Слушаем изменения на всей форме фильтра (для дат и статуса)
     if (filterForm) {
         filterForm.addEventListener('change', (e) => {
-            // Игнорируем тип и категорию, так как они обрабатываются ниже отдельно
             if (e.target.id !== 'filter-type' && e.target.id !== 'filter-category') {
                 triggerFilter();
             }
@@ -215,13 +208,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         filterSubcategorySelect.addEventListener('change', triggerFilter);
     }
 
-    // Кнопка сброса всех фильтров
     const filterResetBtn = document.getElementById('filter-reset-btn');
     if (filterResetBtn && filterForm) {
         filterResetBtn.addEventListener('click', async () => {
-            filterForm.reset(); // Очищаем форму
+            filterForm.reset();
 
-            // Возвращаем селекты в дефолтное состояние
             if (filterCategorySelect) {
                 ui.clearAndPlaceholder(filterCategorySelect, 'Все категории');
                 filterCategorySelect.options[0].value = "";
@@ -233,12 +224,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 filterSubcategorySelect.disabled = true;
             }
 
-            // Перезагружаем чистую таблицу
             await loadTable();
         });
     }
 
-    // --- ДЕЛИГИРОВАНИЕ КЛИКОВ (Редактирование / Удаление) ---
     tbody.addEventListener('click', async (e) => {
         const editBtn = e.target.closest('.edit-btn');
         const deleteBtn = e.target.closest('.delete-btn');
@@ -281,7 +270,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }
                 }
 
-                // ОТКРЫТИЕ МОДАЛЬНОГО ОКНА ДЛЯ РЕДАКТИРОВАНИЯ
                 const modal = new bootstrap.Modal(transactionModalEl);
                 modal.show();
             }

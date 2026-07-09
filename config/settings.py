@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'django_filters',
+    'drf_spectacular',
     'corsheaders',
     'apps.dictionaries',
     'apps.transactions',
@@ -83,9 +84,19 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Система учета ДДС API',
+    'DESCRIPTION': 'Документация для мониторинга движений денежных средств (ДДС)',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True, 
 }
 
 # Database

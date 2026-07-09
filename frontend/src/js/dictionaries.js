@@ -113,7 +113,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }).join('');
     }
 
-    // Заполнение селектов зависимостей в формах управления
     function fillRelationSelects() {
         const catTypeSelect = document.getElementById('category-crud-type');
         catTypeSelect.innerHTML = '<option value="" selected disabled>Привязать к типу...</option>' +
@@ -124,7 +123,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
     }
 
-    // ГЛОБАЛЬНАЯ ФУНКЦИЯ ДЛЯ ПЕРЕВОДА ФОРМ В РЕЖИМ РЕДАКТИРОВАНИЯ
     window.editItem = function (entity, id) {
         // Сначала сбрасываем старое редактирование для этой же сущности, если оно было
         cancelEdit(entity, false);

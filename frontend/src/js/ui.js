@@ -18,7 +18,7 @@ const ui = {
         tbody.innerHTML = '';
 
         if (transactions.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted py-4">Транзакций не найдено</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="9" class="text-center text-muted py-4">Транзакций не найдено</td></tr>`;
             return;
         }
 
@@ -31,9 +31,22 @@ const ui = {
             const statusName = t.status ? t.status.name : '—';
             const comment = t.comment ? t.comment : '—';
 
-            const isIncome = typeName === 'Пополнение';
-            const amountClass = isIncome ? 'text-success fw-bold' : 'text-danger fw-bold';
-            const prefix = isIncome ? '+' : '-';
+            const lowerTypeName = typeName.toLowerCase();
+            const formattedAmount = parseFloat(t.amount).toLocaleString('ru-RU', { minimumFractionDigits: 2 });
+
+            let amountClass = 'text-dark fw-bold'; // По умолчанию для любых других типов (информационный/нейтральный)
+            let prefix = ''; // По умолчанию без знаков + или -
+
+            if (lowerTypeName.includes('пополнение')) {
+                amountClass = 'text-success fw-bold';
+                prefix = '+';
+            } else if (lowerTypeName.includes('списание')) {
+                amountClass = 'text-danger fw-bold';
+                prefix = '-';
+            } else {
+                amountClass = 'fw-bold';
+                prefix = '';
+            }
 
             row.innerHTML = `
                 <td>${t.id}</td>
@@ -42,7 +55,7 @@ const ui = {
                 <td>${categoryName}</td>
                 <td>${subcategoryName}</td>
                 <td><span class="badge bg-secondary">${statusName}</span></td>
-                <td class="${amountClass}">${prefix}${parseFloat(t.amount).toLocaleString('ru-RU', { minimumFractionDigits: 2 })} ₽</td>
+                <td class="${amountClass}">${prefix}${formattedAmount} ₽</td>
                 <td>${comment}</td>
                 <td class="text-end">
                     <button class="btn btn-sm btn-outline-primary edit-btn me-1" data-id="${t.id}">✏️</button>

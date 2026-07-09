@@ -60,6 +60,11 @@ const api = {
         return response.data;
     },
 
+    async getTransactionTypes() {
+        const response = await apiInstance.get('/types/');
+        return response.data;
+    },
+
     async getStatuses() {
         const response = await apiInstance.get('/statuses/');
         return response.data;

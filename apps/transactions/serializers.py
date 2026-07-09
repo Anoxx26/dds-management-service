@@ -10,7 +10,6 @@ from apps.dictionaries.serializers import (
 from django.utils import timezone
 
 class TransactionSerializer(serializers.ModelSerializer):
-    
     date = serializers.DateTimeField(format="%Y-%m-%d", required=False, allow_null=True)
     
     class Meta:
