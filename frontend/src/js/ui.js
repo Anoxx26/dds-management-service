@@ -29,6 +29,7 @@ const ui = {
             const categoryName = t.category ? t.category.name : '—';
             const subcategoryName = t.subcategory ? t.subcategory.name : '—';
             const statusName = t.status ? t.status.name : '—';
+            const comment = t.comment ? t.comment : '—';
 
             const isIncome = typeName === 'Пополнение';
             const amountClass = isIncome ? 'text-success fw-bold' : 'text-danger fw-bold';
@@ -40,8 +41,9 @@ const ui = {
                 <td><span class="badge bg-secondary">${typeName}</span></td>
                 <td>${categoryName}</td>
                 <td>${subcategoryName}</td>
-                <td><span class="badge bg-info text-dark">${statusName}</span></td>
-                <td class="${amountClass}">${prefix} ${parseFloat(t.amount).toLocaleString('ru-RU', { minimumFractionDigits: 2 })} ₽</td>
+                <td><span class="badge bg-secondary">${statusName}</span></td>
+                <td class="${amountClass}">${prefix}${parseFloat(t.amount).toLocaleString('ru-RU', { minimumFractionDigits: 2 })} ₽</td>
+                <td>${comment}</td>
                 <td class="text-end">
                     <button class="btn btn-sm btn-outline-primary edit-btn me-1" data-id="${t.id}">✏️</button>
                     <button class="btn btn-sm btn-outline-danger delete-btn" data-id="${t.id}">❌</button>

@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <tr class="${isEditing ? 'table-warning' : ''}">
                     <td>${s.id}</td>
                     <td><strong>${s.name}</strong></td>
-                    <td><span class="badge bg-light text-dark">${s.category_name || (s.category ? s.category.name : '')}</span></td>
+                    <td><span class="badge bg-secondary">${s.category_name || (s.category ? s.category.name : '')}</span></td>
                     <td class="text-end">
                         <button class="btn btn-sm ${isEditing ? 'btn-secondary' : 'btn-outline-primary'} me-1" 
                                 onclick="${isEditing ? "cancelEdit('subcategory')" : `editItem('subcategory', ${s.id})`}">
@@ -195,21 +195,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('type-form').reset();
             document.getElementById('type-id').value = '';
             document.getElementById('type-submit').innerText = 'Добавить';
-            document.getElementById('type-submit').className = 'btn btn-success w-100';
+            document.getElementById('type-submit').className = 'btn btn-primary w-100';
         }
         if (entity === 'category') {
             editingCategoryId = null;
             document.getElementById('category-crud-form').reset();
             document.getElementById('category-crud-id').value = '';
             document.getElementById('category-crud-submit').innerText = 'Добавить категорию';
-            document.getElementById('category-crud-submit').className = 'btn btn-warning w-100 text-dark fw-bold';
+            document.getElementById('category-crud-submit').className = 'btn btn-primary w-100 fw-bold';
         }
         if (entity === 'subcategory') {
             editingSubcategoryId = null;
             document.getElementById('subcategory-crud-form').reset();
             document.getElementById('subcategory-crud-id').value = '';
             document.getElementById('subcategory-crud-submit').innerText = 'Добавить подкатегорию';
-            document.getElementById('subcategory-crud-submit').className = 'btn btn-info w-100 text-dark fw-bold';
+            document.getElementById('subcategory-crud-submit').className = 'btn btn-primary w-100 fw-bold';
         }
 
         if (shouldRender) renderAll();

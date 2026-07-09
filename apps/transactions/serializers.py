@@ -29,13 +29,12 @@ class TransactionSerializer(serializers.ModelSerializer):
             except (ValueError, TypeError):
                 pass
         elif 'date' in data and data['date'] == '':
-            data.pop('date') # Убираем пустую строку, чтобы DRF не ругался на формат
+            data.pop('date')
             
         return super().to_internal_value(data)
     
 
     def validate(self, attrs):
-        # Автоматическое заполнение даты, если пользователь оставил поле пустым
         if not attrs.get('date'):
             attrs['date'] = timezone.now()
 
@@ -43,7 +42,6 @@ class TransactionSerializer(serializers.ModelSerializer):
         category = attrs.get('category')
         subcategory = attrs.get('subcategory')
 
-        # Жесткая проверка бизнес-правил ТЗ на бэкенде:
         if category and transaction_type:
             if category.transaction_type != transaction_type:
                 raise serializers.ValidationError({

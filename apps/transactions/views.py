@@ -13,7 +13,7 @@ class TransactionFilter(filters.FilterSet):
         fields = ['status', 'transaction_type', 'category', 'subcategory', 'start_date', 'end_date']
 
 class TransactionViewSet(viewsets.ModelViewSet):
-    queryset = Transaction.objects.select_related('status', 'transaction_type', 'category', 'subcategory').all()
+    queryset = Transaction.objects.select_related('status', 'transaction_type', 'category', 'subcategory').all().order_by('-id')
     filterset_class = TransactionFilter
 
     def get_serializer_class(self):
