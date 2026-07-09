@@ -59,11 +59,13 @@ _Интерфейс для администрирования сущностей
 ![Добавление в справочник - Шаг 1](docs/screenshots/dictionaries_page_add.jpg)
 
 ![Добавление в справочник - Шаг 2](docs/screenshots/dictionaries_page_add_2.jpg)
+
 _Создание новых элементов справочника для расширения аналитики учета денежных потоков._
 
 #### Редактирование элементов справочника
 
 ![Редактирование элемента](docs/screenshots/dictionaries_page_edit.jpg)
+
 _Изменение названий или параметров существующих категорий/статусов._
 
 #### Удаление элементов и обработка ошибок (Валидация бизнес-логики)
@@ -139,6 +141,10 @@ docker-compose exec web python manage.py createsuperuser
 
 - **Пользовательский интерфейс (Frontend): http://localhost:8080**
 - **API / Backend (Django): http://localhost:8001**
+- 📝 **Интерактивная документация API:**
+  - **Swagger UI:** http://localhost:8001/api/docs/swagger/ _(удобно для тестирования запросов прямо из браузера)_
+  - **Redoc:** http://localhost:8001/api/docs/redoc/ _(более строгий и чистый трехпанельный вид схемы API)_
+  - **Схема OpenAPI (JSON/YAML):** http://localhost:8001/api/schema/ _(сырая схема для импорта в Postman)_
 
 ## Альтернативный способ запуска (без Docker)
 
